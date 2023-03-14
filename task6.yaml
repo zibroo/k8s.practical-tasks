@@ -36,6 +36,14 @@ spec:
         secretKeyRef:
           name: secret2
           key: pass
+    volumeMounts:
+    - name: secret-volume
+      mountPath: /tmp/secret1
+      readOnly: true
+  volumes: 
+  - name: secret-volume
+    secret: 
+      secretName: secret2
 ---
 apiVersion: v1
 kind: Secret
