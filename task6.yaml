@@ -1,0 +1,47 @@
+# Task 6:
+# Do the following in a new Namespace secret. 
+# Create a Pod named secret-pod of image busybox:1.31.1 which should keep running for some time. 
+# Create secret  in the secret Namespace and mount it readonly into the Pod at /tmp/secret1.
+
+# Create a new Secret in Namespace secret called secret2 which should contain user=user1 and pass=1234. 
+# These entries should be available inside the Pod's container as environment variables APP_USER and APP_PASS.
+
+# Confirm everything is working.
+
+
+
+apiVersion: v1
+kind: Namespace
+metadata: 
+  name: secret
+---
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: secret-pod
+  namespace: secret
+spec: 
+  containers:
+  - name: busybox
+    image: busybox:1.31.1
+    command: ["sleep", "3600"]
+    env:
+    - name: APP_USER 
+      valueFrom:
+        secretKeyRef:
+          name: secret2
+          key: user
+    - name: APP_PASS
+      valueFrom:
+        secretKeyRef:
+          name: secret2
+          key: pass
+---
+apiVersion: v1
+kind: Secret
+metadata: 
+  name: secret2
+  namespace: secret
+data:
+  user: dXNlcjEK
+  pass: MTIzNAo=
