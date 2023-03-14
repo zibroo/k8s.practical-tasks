@@ -42,6 +42,7 @@ spec:
     command: ["/bin/sh", "-c"]
     args: 
     - tail -f /mydata/data.log  /dev/null
+    # i am using /dev/null to run my container constantly
     volumeMounts:
     - name: my-volume
       mountPath: /mydata
